@@ -1,5 +1,3 @@
-import 'package:asda_code__app/pages/home_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {
@@ -27,9 +25,9 @@ class LoginFormState extends State<LoginForm> {
               // The validator receives the text that the user has entered.
               decoration: const InputDecoration(
                 labelText: 'Username',
-                icon: const Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: const Icon(Icons.person),
+                icon: Padding(
+                  padding: EdgeInsets.only(top: 15),
+                  child: Icon(Icons.person),
                 ),
               ),
               validator: (value) {
@@ -45,9 +43,9 @@ class LoginFormState extends State<LoginForm> {
             child: TextFormField(
               decoration: const InputDecoration(
                 labelText: 'Password',
-                icon: const Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: const Icon(Icons.lock),
+                icon: Padding(
+                  padding: EdgeInsets.only(top: 15),
+                  child: Icon(Icons.lock),
                 ),
               ),
               obscureText: true,
@@ -64,16 +62,15 @@ class LoginFormState extends State<LoginForm> {
             child: ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  Navigator.pushReplacement(
+                  Navigator.pushNamedAndRemoveUntil(
                     context,
-                    MaterialPageRoute(
-                        builder: (_) => const HomePage(
-                              title: "test",
-                            )),
+                    '/home',
+                    (Route<dynamic> route) =>
+                        false, // Navigate to home page and remove all previous routes
                   );
                 }
               },
-              child: Text("Login"),
+              child: const Text("Login"),
             ),
           ),
         ],

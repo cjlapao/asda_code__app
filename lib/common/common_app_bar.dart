@@ -1,15 +1,15 @@
-import 'package:asda_code__app/pages/login_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CommonWidgets {
-  static const String applicationTitle = "Parking Code Generator";
+class CommonAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final List<Widget>? actions;
 
-  static AppBar getCommonAppBar({required BuildContext context, title}) {
+  const CommonAppBar({super.key, required this.title, this.actions});
+
+  @override
+  Widget build(BuildContext context) {
     return AppBar(
         backgroundColor: Colors.white,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -21,7 +21,7 @@ class CommonWidgets {
             Padding(
               padding: const EdgeInsets.only(left: 15.0),
               child: Text(
-                title ?? CommonWidgets.applicationTitle,
+                title,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
@@ -30,10 +30,12 @@ class CommonWidgets {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.pushReplacement(
+                Navigator.pushNamedAndRemoveUntil(
                     context,
-                    MaterialPageRoute(
-                        builder: ((context) => const LoginPage())));
+                    '/login',
+                    (Route<dynamic> route) =>
+                        false // Navigate to login page and remove all previous routes
+                    );
               },
               icon: const Icon(
                 Icons.logout,
@@ -41,4 +43,7 @@ class CommonWidgets {
               ))
         ]);
   }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

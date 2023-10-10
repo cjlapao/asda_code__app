@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -34,16 +33,18 @@ class QRCode extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(qrBorderRadius ?? 0),
-      child: QrImage(
-        size: qrSize,
-        data: qrData,
-        gapless: gapLess ?? true,
-        version: qrVersion ?? QrVersions.auto,
-        padding: EdgeInsets.all(qrPadding ?? 10),
-        semanticsLabel: semanticsLabel ?? '',
-        backgroundColor: qrBackgroundColor ?? Colors.transparent,
-        foregroundColor: qrForegroundColor ?? Colors.black,
-      ),
+      child: QrImageView(
+          size: qrSize,
+          data: qrData,
+          gapless: gapLess ?? true,
+          version: qrVersion ?? QrVersions.auto,
+          padding: EdgeInsets.all(qrPadding ?? 10),
+          semanticsLabel: semanticsLabel ?? '',
+          backgroundColor: qrBackgroundColor ?? Colors.transparent,
+          eyeStyle: QrEyeStyle(
+            eyeShape: QrEyeShape.square,
+            color: qrForegroundColor ?? Colors.black,
+          )),
     );
   }
 }

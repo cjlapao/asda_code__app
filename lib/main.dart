@@ -1,36 +1,50 @@
-import 'package:asda_code__app/common_widgets.dart';
-import 'package:asda_code__app/pages/home_page.dart';
-import 'package:asda_code__app/pages/login_form.dart';
-import 'package:asda_code__app/pages/login_page.dart';
-import 'package:asda_code__app/qr_code.dart';
+import 'package:asda_code_app/constants/strings.dart';
+import 'package:asda_code_app/home/home_page.dart';
+import 'package:asda_code_app/login/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const AsdaParkingCodeGenerator());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AsdaParkingCodeGenerator extends StatelessWidget {
+  final String initialRoute;
 
-  // This widget is the root of your application.
+  const AsdaParkingCodeGenerator({super.key, this.initialRoute = '/login'});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Asda Parking Code Generator',
       debugShowCheckedModeBanner: false,
       showSemanticsDebugger: false,
+      scrollBehavior: const ScrollBehavior(),
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
+      initialRoute: initialRoute,
+      onGenerateRoute: (settings) {
+        Uri? uri = Uri.tryParse(settings.name!);
+        switch (uri?.path) {
+          case '/login':
+            return MaterialPageRoute(
+              builder: (context) => const LoginPage(),
+              settings: settings,
+            );
+          case '/home':
+            return MaterialPageRoute(
+              builder: (context) => HomePage(
+                title: ConstantStrings.applicationTitle,
+              ),
+              settings: settings,
+            );
+          default:
+            return MaterialPageRoute(
+              builder: (context) => const LoginPage(),
+              settings: settings,
+            );
+        }
+      },
       // home: const HomePage(title: 'Asda Parking Code Generator'),
       home: const LoginPage(),
     );
